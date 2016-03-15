@@ -1,0 +1,69 @@
+<ion-view cache-view="false" view-title="My Info">
+  <ion-content style="background-image:url('img/background.png');background-position:center;">
+     <div class="card">
+        <div class="item">
+        <ion-item style="font-size:1.3em;font-weight:bold">
+            <img ng-if="currentMember.personImageUrl.length > 0" src="https://res.cloudinary.com/ntcapps/image/upload/w_100,h_100,c_thumb,r_max/{{currentMember.personImageUrl}}" alt="">
+            {{currentMember.name}}
+        </ion-item>
+            <!--        {{currentMember.picture}}-->
+        <ion-list>
+            <ion-item><h2>Chores</h2>
+            <div class="card">
+                <ion-item>
+                    Incomplete Chores: <br>
+                    <strong>{{currentStats.incompleteChores}}</strong>
+                </ion-item>
+                <ion-item class="item-text-wrap">
+                    All-time completed chores: <br>
+                    <strong>{{currentStats.alltimechores}}</strong>
+                </ion-item>
+            </div>
+            <h2>Earnings</h2>
+            <div class="card">
+                <ion-item>
+                    Earnings this week:<br>
+                    <strong>{{currentStats.earnedthisweek | currency}}</strong>
+                </ion-item>
+                <ion-item ng-if="currentMember.savings">
+                    Savings:<br>
+                    <strong>{{currentMember.savings | currency}}</strong> </ion-item>
+                <ion-item ng-if="!currentMember.savings">
+                   Savings:<br>
+                   <strong>no information yet</strong>
+                </ion-item>
+                <ion-item ng-if="currentMember.spendingmoneyalltime">
+                    Spending money earned (all-time): <br>
+                    <strong>{{currentMember.spendingmoneyalltime | currency}}</strong>     
+                </ion-item>
+                <ion-item class="item item-text-wrap" ng-if="!currentMember.spendingmoneyalltime">
+                    Spending money earned (all-time):<br>
+                    <strong>no information yet</strong>
+                </ion-item>
+                <ion-item>
+                    All-time earnings:<br>
+                    <strong>{{currentStats.alltimeearnings | currency}}</strong>
+                </ion-item>
+            </div>
+            
+            <h2>Goals</h2>
+            <div class="card">
+                <ion-item>
+                    Current goal:<br>
+                    <span ng-if="currentStats.currentgoalname">
+                        <strong>{{currentStats.currentgoalname}}</strong>
+                    </span>
+                    <span ng-if="!currentStats.currentgoalname">
+                        <strong>No current goal!</strong> <br>
+                    </span> <br>
+                        <img ng-if="currentStats.currentgoalimageurl.length > 0" src="https://res.cloudinary.com/ntcapps/image/upload/w_50,h_50,c_thumb,r_max/{{currentStats.currentgoalimageurl}}" alt=""> <br>
+                    <span ng-if="currentStats.currentgoalscosttotal > 0">Cost: <strong>{{currentStats.currentgoalscosttotal | currency:"$"}}</strong> <br></span>
+                </ion-item>
+            </div>
+            </ion-item>
+        </ion-list>
+
+        </div>
+    </div>
+  </ion-content>
+</ion-view>

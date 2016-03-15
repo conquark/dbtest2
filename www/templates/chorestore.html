@@ -1,0 +1,77 @@
+<ion-view cache-view="false" view-title="Chore Store">
+    <ion-nav-buttons side="right">
+        <button ng-if="currentMember.admin === true" class="button button-icon button-clear ion-help" ng-click="helpstoreadmin()" ></button>
+        <button ng-if="currentMember.admin !== true" class="button button-icon button-clear ion-help" ng-click="helpstorechild()" ></button>
+    </ion-nav-buttons>
+   <ion-content style="background-image:url('img/background.png');background-position:center">
+    <ion-refresher pulling-text="Pull to refresh" on-refresh="doRefresh()">
+    </ion-refresher>
+    <div class="card">
+            <div style="text-align:center"><span style="color:lightgray">pull down to refresh</span></div>
+    <button ng-click="addChore()" class="button button-positive button-full" ng-if="currentMember.admin === true">
+      Add a new Chore
+    </button>
+    <ion-list>
+       <ion-item ng-if="service.chorestore.length < 1" class="item-text-wrap item-icon-left">
+          <i class="icon ion-ios-cart-outline"></i>
+           #empty <br>
+           All Chore Store chores have been claimed!
+           <span ng-if="currentMember.admin === false">Check again later to see if more have been added.</span>
+           <span ng-if="currentMember.admin === true"><br><br>Tap the blue button above to add more chores to the store.</span>
+       </ion-item>
+        <ion-item class="item-text-wrap" ng-repeat="chore in service.chorestore"
+               ui-sref="app.chorestoredetails({id:chore._id})" ng-if="chore.complete !== complete && chore._deleted !== true">
+            Chore:<br />
+            {{chore.name}} <br>
+            <span ng-if="chore.value > 0 && currentMember.admin !== true">You can earn: ${{chore.value}} <br></span>
+            <span ng-if="chore.value > 0 && currentMember.admin === true">You can earn: {{chore.value * 100 | number}} points <br></span>
+            <span style="font-seight:bold;font-size: .8em" ng-if="chore.repeat">Next due date:</span>
+            <span style="font-weight:bold;font-size: .8em" ng-if="chore.dueDate && !chore.repeat">Due date: {{chore.dueDate | date : short}}</span>
+            <div style="border:0px solid gray;padding:10px; padding-top:2px; border-radius: 8px;">
+                <span style="color:gray;margin-bottom:15px;font-size: .8em">Categories</span>
+                <br>
+                <span ng-if="status === true" class="category-block" ng-repeat="(category,status) in chore.categories">{{category}}</span>                
+            </div>
+
+<!--            <img src="img/badges/trash-badge.png" ng-if="chore.categories.kitchen === true" alt="" style="width:40px">-->
+<!--
+            <img src="" ng-if="chore.categories.kitchen === true" alt="" style="width:20px">
+            <img src="" ng-if="chore.categories.kitchen === true" alt="" style="width:20px">
+            <img src="" ng-if="chore.categories.kitchen === true" alt="" style="width:20px">
+            <img src="" ng-if="chore.categories.kitchen === true" alt="" style="width:20px">
+            <img src="" ng-if="chore.categories.kitchen === true" alt="" style="width:20px">
+            <img src="" ng-if="chore.categories.kitchen === true" alt="" style="width:20px">
+            <img src="" ng-if="chore.categories.kitchen === true" alt="" style="width:20px">
+            <img src="" ng-if="chore.categories.kitchen === true" alt="" style="width:20px">
+            <img src="" ng-if="chore.categories.kitchen === true" alt="" style="width:20px">
+-->
+        </ion-item>
+    </ion-list>
+    </div>
+<!--
+    <div class="card dark" style="padding: 30px;padding-top:10px;" ng-if="chorestoresize < 1">
+               <div style="float:left"><i class="ion-information-circled calm" style="font-size:2em;padding:12px;"></i></div>
+                <span ng-if="currentMember.admin !== true">Hi, {{currentMember.name}}!</span>
+                This is the <strong class="calm">Chore Store</strong>.
+                
+                <span ng-if="currentMember.admin === true">
+                    By clicking the blue button above, you can add new chores for your children or other family members.
+                </span><br /><br />
+                <span ng-if="currentMember.admin !== true">This is the place where you can claim any unassigned chores. To claim a chore, tap the chore, and then tap the "claim this chore" button at the top of the next screen.</span>
+                
+                <span ng-if="currentMember.admin === true">
+                <img src="img/addchore.png" alt="" style="max-width:60%;float:right; box-shadow:2px 2px 5px black; margin-left: 10px;margin-bottom: 10px;">
+                
+                    You can either assign a chore to a particular family member, or you can keep it in the Chore Store for someone to claim later.<br/><br />Go ahead and create a chore now!</span>
+    </div>
+-->
+<!--
+    <div class="card dark" style="padding: 30px;padding-top:10px;" ng-if="chorestoresize === 1">
+               <div style="float:left"><i class="ion-information-circled calm" style="font-size:2em;padding:12px;"></i></div>
+                <strong class="calm">Hint:</strong> If you've created a chore, but don't see it in the store list yet, try refreshing the screen by pulling down and releasing.<br /><br />
+                
+                You can use the same technique if you've deleted a chore, but it hasn't disappeared from the chore list yet.
+    </div>
+-->
+  </ion-content>
+</ion-view>

@@ -1,0 +1,141 @@
+<ion-side-menus enable-menu-with-back-views="false">
+  <ion-side-menu-content>
+    <ion-nav-bar class="bar-balanced">
+      <ion-nav-back-button>
+      </ion-nav-back-button>
+
+      <ion-nav-buttons side="left">
+        <button class="button button-icon button-clear ion-home" menu-toggle="left" ng-click="doRefresh()">
+        </button><br/>
+      </ion-nav-buttons>
+    </ion-nav-bar>
+    <ion-nav-view name="menuContent"></ion-nav-view>
+  </ion-side-menu-content>
+
+  <ion-side-menu side="left">
+    <ion-header-bar class="bar-balanced">
+      <h1 class="title" id="menutext" onclick="incrementAdminCounter()">Menu</h1>
+    </ion-header-bar>
+    <ion-content  style="background-image:url('img/background.png');">
+       <button class="button button-full button-light" style="font-size:.6em;padding-top:3px !important;padding-bottom:3px !important">Brought to you by <strong>{{sponsor.name}}</strong></button>
+    </div>
+    <div class="card">
+        <ion-list>
+        <ion-item class="beige item-text-wrap" ng-if="currentMember.name.length > 0">
+            <div class="row">
+                <div class="col col-40">
+                     <img src="https://res.cloudinary.com/ntcapps/image/upload/w_90,h_90,c_thumb,r_max/{{currentMember.personImageUrl}}" alt="" width="70"><br>
+                 </div>
+                 <div class="col col-bottom col-offset-45 col-30" style="font-size:.6em;line-height:1em">
+                    <span ng-if="!currentMember.admin">Goals: {{currentStats.currentgoals}} <br></span>
+                    Chores to do: {{currentStats.incompleteChores}} <br>
+                    Earnings this week: 
+                    <span ng-if="currentMember.admin !== true">{{currentStats.earnedthisweek | currency}}</span>
+                    <span ng-if="currentMember.admin === true"><br>{{currentStats.earnedthisweek * 100| number}} points</span>
+                 </div>
+            </div>
+            <div class="row">
+                {{currentMember.name}} is logged in.<br/>                 
+            </div>
+        </ion-item>
+        <ion-item ng-if="familySize > 0 && currentMember.admin !== true" menu-close href="#/app/me">
+          My Info
+        </ion-item>
+
+        <ion-item ng-if="familySize > 0" menu-close href="#/app/chorestore" class="item-icon-right">
+          <i class="icon ion-android-cart"></i>
+          Chore Store<span ng-if="currentMember.admin === true">:<br /><span style="color:gray;font-size:.8em;" class="item-text-wrap"><div style="line-height: 1.1em;margin-top:5px">Add and assign chores to your kids...or yourself!</div></span></span>
+        </ion-item>
+        <ion-item ng-if="familySize > 0 && currentMember.admin == true" menu-close href="#/app/dashboard" class="item-icon-right">
+            <i class="icon ion-clipboard"></i>
+             <div class="item-text-wrap">
+              Parent Dashboard
+<!--
+              <span ng-if="currentMember.admin === true"><br />
+              <span style="color:gray">Add additional family members, manage payments, link to online banking.</span></span>      
+-->
+            </div>
+        </ion-item>
+        <ion-item ng-if="familySize < 1" menu-close ng-click="setup()">
+          <button class="button button-positive">Setup - [start here]</button>
+        </ion-item>        
+       <ion-item ng-if="familySize > 0" menu-close href="#/app/mychores" class="item-icon-right item-avatar">
+         <img ng-if="currentMember.personImageUrl" src="https://res.cloudinary.com/ntcapps/image/upload/w_90,h_90,c_thumb,r_max/{{currentMember.personImageUrl}}" alt="">
+         <img src="img/image-placeholder.png" ng-if="!currentMember.personImageUrl" alt="">
+         <i class="icon ion-android-done-all"></i>
+          My Chores <br>
+          <span ng-if="currentStats.incompleteChores > 1">{{currentStats.incompleteChores}} chores to do</span>
+          <span ng-if="currentStats.incompleteChores > 0 && currentStats.incompleteChores < 2">{{currentStats.incompleteChores}} chore to do</span>
+        </ion-item>
+       <ion-item ng-if="familySize > 0 && currentMember.admin !== true" menu-close href="#/app/mygoals" class="item-icon-right">
+         <i class="icon ion-paper-airplane"></i>
+          My Goals <span ng-if="currentStats.currentgoals > 0">({{currentStats.currentgoals}})</span>
+        </ion-item>
+       <ion-item ng-if="familySize > 0" class="item-icon-right dark" style="margin-bottom:none;border-bottom:none;padding-bottom:none;">
+         <i class="icon ion-trophy energized"></i>
+          Badges
+        </ion-item>
+        <ion-item style="border-top:none;margin-top:none;padding-top:none">
+          <div class="item-text-wrap dark" style="text-align:center;padding-top:none" ng-repeat="(badge,status) in currentMember.badges">
+              <img src="img/badges/bathroom-cleaning.png" ng-if="badge === 'bathroomcleaning' && status === true" alt="" style="width:150px;">
+              <img src="img/badges/clean-dishes-badge.png" ng-if="badge === 'washdishes'" alt="" style="width:150px;">
+              <img src="img/badges/clean-off-table.png" ng-if="badge === 'cleantable' && status === true" alt="" style="width:150px;">
+              <img src="img/badges/feed-animal-badge.png" ng-if="badge === 'feedpet' && status === true" alt="" style="width:150px;">
+              <img src="img/badges/general-cleaning-badge.png" ng-if="badge === 'generalCleaning' && status === true" alt="" style="width:150px;">
+              <img src="img/badges/trash-badge.png" ng-if="badge === 'trash' && status === true" alt="" style="width:150px;">
+              <img src="img/badges/vacuum-badge.png" ng-if="badge === 'vacuum' && status === true" alt="" style="width:150px;">
+              <img src="img/badges/walk-pet-badge.png" ng-if="badge === 'walkpet' && status === true" alt="" style="width:150px;">
+              <img src="img/badges/wash-clothes-badge.png" ng-if="badge === 'washclothes' && status === true" alt="" style="width:150px;">
+              <img src="img/badges/yard-work-badge.png" ng-if="badge === 'yard' && status === true" alt="" style="width:150px;">              
+              <img src="img/chili.jpg" ng-if="badge === 'chili' && status === true" alt="" style="width:150px;">
+              <div class="center" ng-if="badge === 'chili' && status === true" class="balanced" style="font-weight:bold">Chili Master!</div>
+              <div class="center" ng-if="badge === 'bathroomcleaning' && status === true" class="balanced" style="font-weight:bold">Bathroom Buster!</div>
+              <div class="center" ng-if="badge === 'cleantable' && status === true" class="balanced" style="font-weight:bold">Table Cleanup Squad!</div>
+              <div class="center" ng-if="badge === 'feedpet' && status === true" class="balanced" style="font-weight:bold">Pet Chef!</div>
+              <div class="center" ng-if="badge === 'generalCleaning' && status === true" class="balanced" style="font-weight:bold">Clean-inator!</div>
+              <div class="center" ng-if="badge === 'trash' && status === true" class="balanced" style="font-weight:bold">TrashMaster!</div>
+              <div class="center" ng-if="badge === 'vacuum' && status === true" class="balanced" style="font-weight:bold">Vacuum Wizard</div>
+              <div class="center" ng-if="badge === 'walkpet' && status === true" class="balanced" style="font-weight:bold">Pet Walker!</div>
+              <div class="center" ng-if="badge === 'washclothes' && status === true" class="balanced" style="font-weight:bold">Clothes Wrangler!</div>
+              <div class="center" ng-if="badge === 'yard' && status === true" class="balanced" style="font-weight:bold">Yard Hero!</div>
+              <div class="center" ng-if="badge === 'washdishes' && status === true" class="balanced" style="font-weight:bold">Dish Master!</div>
+              <hr>
+          </div>
+        </ion-item>        
+        <ion-item menu-close href="#/app/welcome">
+          Home Screen
+        </ion-item>
+        <ion-item menu-close ng-click="login()" href="#/app/welcome">
+<!--          <span ng-if="familySize < 1">Enter Premium Code</span><span ng-if="familySize > 0">Switch user</span>-->
+              <span ng-if="familySize > 0" style="color:gray;">Log in as a different user</span>
+        </ion-item>
+<!--
+        <button class="button button-primary button-block " ng-click="checkForUpdates()">
+          Check for updates
+        </button>
+
+        <button class="button button-stable button-block button-pulse" ng-if="hasUpdate" ng-click="doUpdate()">
+          Download update
+        </button>
+-->
+        <ion-item ng-if="adminMode" onclick="localStorage.clear()">
+            [clear localstorage]
+        </ion-item>
+<!--
+        <ion-item menu-close href="#/app/playlists">
+          Playlists
+        </ion-item>
+-->           <ion-item ng-if="adminMode">
+                    <div style="font-size:.8em;color:gray">{{dbname}}</div>
+            </ion-item>
+      </ion-list>
+    </div>
+
+<!--
+    <div style="margin:auto;margin-top:3px;border:0px solid white;border-radius: 8px;padding:5px;background-color:white;max-width:90%;">
+        Brought to you by <strong>{{sponsor.name}}</strong>
+    </div>
+-->
+    </ion-content>
+  </ion-side-menu>
+</ion-side-menus>

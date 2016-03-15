@@ -1,0 +1,41 @@
+<ion-view view-title="Welcome!">
+  <ion-content style="background-image:url('img/background.png');background-position:center;background-size:cover;">
+<!--
+    <div class="overlaywelcome">
+        <div class="overlayhamburgerarrow"></div>
+    </div>
+    <div class="overlaystartbutton" ng-click=""></div>
+-->
+     <div style="text-align:center;margin-top:8px;margin-bottom:15px;position:relative;">
+         <img id="a" src="img/taskmaster2.png" alt="" height="50">
+     </div>
+     <div class="card beige">
+<!--      <button class="button button-full button-aggressive" ng-click="destroy()">Destroy!!!</button>-->
+       <div style="padding:25px;text-align:center">
+        <img id="up" src="https://res.cloudinary.com/ntcapps/image/upload/w_100,h_100,c_thumb,r_max/{{currentMember.personImageUrl}}" alt="">
+        <h2><span id="left">Welcome</span><span ng-if="currentMember.name.length > 0">, </span><span id="right">{{currentMember.name}}!</span></h2>
+        <h4>{{currentStats.incompleteChores}} chores to do</h4>
+        <div style="text-align:center; margin-bottom:0">
+<!--            <img src="img/arrow-right.png" alt=""><br />-->
+           <img id="down" src="img/1455078132_touch-gesture-swipe-right-alternate.png" alt="" height="70"><br>
+            <span ng-if="setupCompleteCookie">
+                Swipe right to start!
+            </span>
+            <span ng-if="setupCompleteCookie === ''" ng-click="cookiereload()">Setting up app for first use...</span>
+        </div>                  
+       </div>
+       
+        <div id="b" style="margin:auto;margin-bottom:5px;border:0px solid white;border-radius: 12px;padding:20px;max-width:95%; background-color:white;text-align:center;font-weight:bold;">
+            {{sponsor.name}}
+        </div>
+
+   </div>
+
+<!--
+    <div style="margin:auto;margin-top:15px;border:0px solid white;border-radius: 12px;padding:30px;max-width:80%; background-color:white;">
+        Brought to you by the good folks at <br>
+        <strong>{{sponsor.name}}</strong>
+    </div>
+-->
+  </ion-content>
+</ion-view>

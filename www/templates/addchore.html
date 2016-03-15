@@ -1,0 +1,141 @@
+<ion-modal-view>
+  <ion-header-bar>
+    <h1 class="title">Add a new chore</h1>
+    <div class="buttons">
+      <button class="button button-clear" ng-click="closeAddChore()">Back</button>
+    </div>
+  </ion-header-bar>
+  <ion-content>
+   <ion-item>
+    <form>
+    <h2 class="item-text-wrap autofocus">Chore Name: {{newChore.name}}</h2>
+    <div class="list">
+              <div class="list">
+                  <label class="item item-input item-select">
+                    <div class="input-label">
+                      Choose:
+                    </div>
+                    <select ng-model="newChore.name">
+                      <option>Clean Bathroom</option>
+                      <option>Clean off table</option>
+                      <option>Clean your room</option>
+                      <option>Do homework</option>
+                      <option>Feed Pet(s)</option>
+                      <option>Mow the lawn</option>
+                      <option>Set the table</option>
+                      <option>Take out trash</option>
+                      <option>Vacuum the floor</option>
+                      <option>Walk Pet</option>
+                      <option>Wash Dishes</option>
+                    </select>
+                  </label>
+                </div>
+        
+            Edit chore name or create your own: <input type="text" id="chorename" ng-model="newChore.name" placeholder="Chore Name">
+        </label>
+    </div>
+    <div class="list">
+        <label class="item item-input item-floating-label">
+            <span class="input-label">Chore Description</span>
+            <input type="text" id="choredescription" ng-model="newChore.description" placeholder="Chore Description">
+        </label>
+    </div>
+    <div class="list">
+        <label class="item item-input">
+            <span class="input-label">Value</span>
+            <i class="icon ion-social-usd placeholder-icon"></i>
+            <input type="number" id="chorevalue" ng-model="newChore.value" placeholder="value">
+        </label>
+    </div>
+    <div class="list">
+        <ion-list>
+          <ion-checkbox ng-model="newChore.requiresapproval" class="item-text-wrap" >Does this chore require parent approval to be considered complete?</ion-checkbox>
+          <a ng-click="approvalHelp();" style='font-size:.8em;text-align:right'>what does this mean?</a>
+        </ion-list>        
+    </div>
+    <div class="list">
+            <ion-list>
+              <ion-checkbox ng-model="newChore.repeats" >Does this chore repeat?</ion-checkbox>
+            </ion-list>
+    </div>
+    <div class="list" ng-if="newChore.repeats === true">
+        <label class="item item-input">
+            <span class="item-text-wrap">What day(s) should the chore repeat on?</span>
+        </label>
+            <ion-list>
+              <ion-checkbox ng-model="newChore.repeatdays.Sunday">Sunday</ion-checkbox>
+              <ion-checkbox ng-model="newChore.repeatdays.Monday">Monday</ion-checkbox>
+              <ion-checkbox ng-model="newChore.repeatdays.Tuesday">Tuesday</ion-checkbox>
+              <ion-checkbox ng-model="newChore.repeatdays.Wednesday">Wednesday</ion-checkbox>
+              <ion-checkbox ng-model="newChore.repeatdays.Thursday">Thursday</ion-checkbox>
+              <ion-checkbox ng-model="newChore.repeatdays.Friday">Friday</ion-checkbox>
+              <ion-checkbox ng-model="newChore.repeatdays.Saturday">Saturday</ion-checkbox>
+            </ion-list>
+    </div>
+    <div class="list" ng-if="newChore.repeats !== true">
+        <label class="item item-input item-icon-right">
+           <i class="icon ion-android-calendar"></i>
+            <span class="item-text-wrap">Due date:</span>
+            <input type="date" ng-model="newChore.dueDate">
+        </label>
+
+    </div>
+    
+    <div class="list">
+        <div>
+          Categories - select any that apply
+        </div>
+        <div>
+        <ion-list>
+
+          <ion-checkbox ng-model="newChore.categories.kitchen">Kitchen</ion-checkbox>
+          <ion-checkbox ng-model="newChore.categories.cleaning">Cleaning</ion-checkbox>
+          <ion-checkbox ng-model="newChore.categories.yard">Yard</ion-checkbox>
+          <ion-checkbox ng-model="newChore.categories.bedroom">Bedroom</ion-checkbox>
+          <ion-checkbox ng-model="newChore.categories.maintenance">Maintenance</ion-checkbox>
+          <ion-checkbox ng-model="newChore.categories.meals">Meals</ion-checkbox>
+          <ion-checkbox ng-model="newChore.categories.declutter">De-clutter</ion-checkbox>
+          <ion-checkbox ng-model="newChore.categories.pets">Pets</ion-checkbox>
+          <ion-checkbox ng-model="newChore.categories.shopping">Shopping</ion-checkbox>
+          
+        </ion-list>            
+        </div>
+
+      </label>
+
+    </div>
+    <div class="list">
+           <span class="label">What do you want to do with this chore?</span>
+           <ion-list>
+              <ion-radio checked="checked" ng-model="newChore.assigned" ng-repeat="member in familyMembers" ng-value="'{{member.name}}'" ng-if="member.admin !== true  || currentMember._id === member._id">Assign to <span ng-show="currentMember._id === member._id">yourself</span><span ng-show="currentMember._id !== member._id">{{member.name}}</span></ion-radio>
+              <ion-radio ng-model="newChore.assigned" ng-value="'Chore Store'">Add to Chore Store</ion-radio>
+            </ion-list>                    
+    </div>
+          <button class="button button-block button-positive" ng-click="saveNewChore()">Add this chore</button>
+        </label>
+      </div>
+    </form>
+    </ion-item>
+  </ion-content>
+</ion-modal-view>
+
+<!--
+
+{
+    _id:            "[datetimestamp.toISOString]",
+    name:           "[chore name]",
+    type:           "chore",
+    frequency:      "[****TODO - NEED TO FIGURE THIS OUT]",
+    value:          "[a number]",
+    description:    "[paragraph description of task]",
+    category:       "[*****category - NEED TO PREDEFINE SOME]",
+    assigned:       "first name of who chore is assigned to",
+    assignedby:     "first name of who assigned the chore (if the person chose the chore him or herself, it will be their own first name)",
+    complete:       true or false (default to false),
+    completiondate: "[date]",
+    needsapproval:  true or false (default to false),
+    approved:       true or false (default to false),
+    approvaldate:   "[date]" (same as completion date if a chosen chore),
+    approvedby:     "[first name of whoever approved the chore]" (your name if you chose it),
+    duedate:        "[optional due date for chore]"
+}-->

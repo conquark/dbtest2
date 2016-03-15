@@ -1,0 +1,31 @@
+<ion-modal-view>
+  <ion-header-bar>
+    <h1 class="title">Choose a user</h1>
+    <div class="buttons">
+      <button class="button button-clear" ng-click="closeLogin()">Back</button>
+    </div>
+  </ion-header-bar>
+  <ion-content>
+    <div class="card">
+          <ion-list ng-if="familySize > 0">
+   <ion-item ng-repeat="member in familyMembers" ng-hide="member._deleted" ng-click="setCurrentMember($index)">
+        <img src="https://res.cloudinary.com/ntcapps/image/upload/w_100,h_100,c_thumb,r_max/{{member.personImageUrl}}" alt="">
+       {{member.name}}
+       
+   </ion-item>      
+  </ion-list>
+    </div>
+<!--
+  <div class="card">
+      <ion-list ng-if="familyMembers < 1">
+          <ion-item class="item-text-wrap">
+               Email you signed up with: <input ng-model="signupemail" type="text"><br />
+               Code given to you by your financial institution: <input ng-model="signupcode" type="text"><br />
+               <button class="button button-positive" ng-click="verifyCode()">Send code</button>              
+          </ion-item>
+      </ion-list>      
+  </div>
+-->
+
+  </ion-content>
+</ion-modal-view>
